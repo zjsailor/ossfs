@@ -1,15 +1,15 @@
 #!/bin/bash
 
 #
-# By default tests run against a local s3proxy instance.  To run against 
+# By default tests run against a local s3proxy instance.  To run against
 # Aliyun OSS, specify the following variables:
 #
 # OSSFS_CREDENTIALS_FILE=keyfile      ossfs format key file
-# TEST_BUCKET_1=bucket               Name of bucket to use 
-# OSSPROXY_BINARY=""                  Leave empty 
+# TEST_BUCKET_1=bucket               Name of bucket to use
+# OSSPROXY_BINARY=""                  Leave empty
 # OSS_URL=""   Specify OSS server
 #
-# Example: 
+# Example:
 #
 # OSSFS_CREDENTIALS_FILE=keyfile TEST_BUCKET_1=bucket OSSPROXY_BINARY="" OSS_URL="http://oss_url" ./small-integration-test.sh
 #
@@ -49,7 +49,7 @@ function exit_handler {
     then
         kill $OSSPROXY_PID
     fi
-    retry 30 fusermount -u $TEST_BUCKET_MOUNT_POINT_1
+#    retry 30 fusermount -u $TEST_BUCKET_MOUNT_POINT_1
 }
 trap exit_handler EXIT
 
@@ -75,7 +75,7 @@ fi
 # Mount the bucket
 if [ ! -d $TEST_BUCKET_MOUNT_POINT_1 ]
 then
-	mkdir -p $TEST_BUCKET_MOUNT_POINT_1
+        mkdir -p $TEST_BUCKET_MOUNT_POINT_1
 fi
 stdbuf -oL -eL $OSSFS $TEST_BUCKET_1 $TEST_BUCKET_MOUNT_POINT_1 \
     -o createbucket \
