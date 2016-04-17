@@ -1694,6 +1694,7 @@ int S3fsCurl::RequestPerform(void)
 {
   // Add the user-agent info
   requestHeaders = curl_slist_sort_insert(requestHeaders, "User-Agent", skUserAgent.c_str());
+  requestHeaders = curl_slist_sort_insert(requestHeaders, "Connection", "close");
   if(IS_S3FS_LOG_DBG()){
     char* ptr_url = NULL;
     curl_easy_getinfo(hCurl, CURLINFO_EFFECTIVE_URL , &ptr_url);
@@ -2114,6 +2115,7 @@ bool S3fsCurl::PreHeadRequest(const char* tpath, const char* bpath, const char* 
   requestHeaders = curl_slist_sort_insert(requestHeaders, "Date", date.c_str());
   requestHeaders = curl_slist_sort_insert(requestHeaders, "Content-Type", NULL);
   requestHeaders = curl_slist_sort_insert(requestHeaders, "User-Agent", skUserAgent.c_str());
+  requestHeaders = curl_slist_sort_insert(requestHeaders, "Connection", "close");
 
   if(!S3fsCurl::IsPublicBucket()){
 	  string Signature = CalcSignature("HEAD", "", "", date, resource);
