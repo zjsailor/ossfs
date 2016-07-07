@@ -921,6 +921,7 @@ int FdEntity::SetMtime(time_t time)
       return -errno;
     }
   }
+  AutoLock auto_lock(&fdent_lock);
   orgmeta["x-oss-meta-mtime"] = str(time);
 
   return 0;
@@ -932,6 +933,7 @@ bool FdEntity::UpdateMtime(void)
   if(!GetStats(st)){
     return false;
   }
+  AutoLock auto_lock(&fdent_lock);
   orgmeta["x-oss-meta-mtime"] = str(st.st_mtime);
   return true;
 }
@@ -949,18 +951,21 @@ bool FdEntity::GetSize(size_t& size)
 
 bool FdEntity::SetMode(mode_t mode)
 {
+  AutoLock auto_lock(&fdent_lock);
   orgmeta["x-oss-meta-mode"] = str(mode);
   return true;
 }
 
 bool FdEntity::SetUId(uid_t uid)
 {
+  AutoLock auto_lock(&fdent_lock);
   orgmeta["x-oss-meta-uid"] = str(uid);
   return true;
 }
 
 bool FdEntity::SetGId(gid_t gid)
 {
+  AutoLock auto_lock(&fdent_lock);
   orgmeta["x-oss-meta-gid"] = str(gid);
   return true;
 }
@@ -970,6 +975,7 @@ bool FdEntity::SetContentType(const char* path)
   if(!path){
     return false;
   }
+  AutoLock auto_lock(&fdent_lock);
   orgmeta["Content-Type"] = S3fsCurl::LookupMimeType(string(path));
   return true;
 }
