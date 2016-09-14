@@ -1168,6 +1168,10 @@ void S3fsCurl::UploadSinglePart(
     }
     RequestPerform();
     headers_t* h = GetResponseHeaders();
+    S3FS_PRN_INFO3("header size: %lu", h->size());
+    for (typeof(h->begin()) it = h->begin(); it != h->end(); ++it) {
+        S3FS_PRN_INFO3("%s:%s,", it->first.c_str(), it->second.c_str());
+    }
     *etag = trim((*h)["ETag"], "\"");
     notifier->Notify();
 }
