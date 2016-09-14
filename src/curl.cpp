@@ -313,7 +313,7 @@ void ThreadPool::DoWork()
 
 void* ThreadPool::HelperFunc(void* context)
 {
-    ((ThreadPool*)context)->DoWork();
+    static_cast<ThreadPool*>(context)->DoWork();
     return NULL;
 }
 
