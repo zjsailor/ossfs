@@ -268,6 +268,7 @@ function test_chmod {
 
 function test_chown {
     echo "Testing chown file function ..."
+    id
 
     # create the test file again
     mk_test_file
