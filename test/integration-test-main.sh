@@ -274,7 +274,7 @@ function test_chown {
 
     ORIGINAL_PERMISSIONS=$(stat --format=%u:%g $TEST_TEXT_FILE)
 
-    chown 1000:1000 $TEST_TEXT_FILE;
+    chown 1234:1234 $TEST_TEXT_FILE;
 
     # if they're the same, we have a problem.
     if [ $(stat --format=%u:%g $TEST_TEXT_FILE) == $ORIGINAL_PERMISSIONS ]
