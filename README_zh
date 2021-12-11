@@ -1,0 +1,11 @@
+ECS挂载OSS
+wget http://gosspublic.alicdn.com/ossfs/ossfs_1.80.5_centos7.0_x86_64.rpm
+sudo yum localinstall ossfs_1.80.5_centos7.0_x86_64.rpm
+echo bucketname:access-key:access-secret > /etc/passwd-ossfs
+chmod 640 /etc/passwd-ossfs （/etc/passwd-ossfs文件中的内容格式为： bucketName:AccessKey:AccessSecret）
+mkdir /mnt/bucket
+ossfs bucketname /mnt/bucket -ourl=oss-cn-hangzhou-internal.aliyuncs.com -opasswd_file=/passwd-path/passwd-ossfs
+末尾加该参数，允许所有人访问
+-oallow_other
+
+fusermount -u /tmp/ossfs(卸载OSS的方法）
